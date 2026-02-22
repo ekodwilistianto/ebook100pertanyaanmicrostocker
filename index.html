@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100+ Pertanyaan Microstocker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#020617', // Dark Blue
+                        fg: '#fafafa',
+                        muted: '#94a3b8',
+                        accent: '#2563eb', // Blue Accent
+                        accentLight: '#60a5fa',
+                        card: '#0f172a', // Deep Blue Card
+                        border: '#1e293b',
+                    },
+                    fontFamily: {
+                        display: ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            overflow-x: hidden;
+            font-family: 'DM Sans', sans-serif;
+            background-color: #020617;
+            color: #fafafa;
+            scroll-behavior: smooth;
+        }
+
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Noise texture overlay */
+        .noise-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Gradient orbs - Blue theme */
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+            top: -100px;
+            right: -100px;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #1e3a8a 0%, transparent 70%);
+            bottom: 20%;
+            left: -200px;
+        }
+
+        /* Button styles */
+        .cta-btn {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cta-btn:hover::before {
+            opacity: 1;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.4);
+        }
+
+        .cta-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Strikethrough animation */
+        .strike-through {
+            position: relative;
+            display: inline-block;
+        }
+
+        .strike-through::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1.5px;
+            background: #2563eb;
+            transform: rotate(-5deg);
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sticky CTA */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background-color: #0f172a;
+            border-top: 1px solid #1e293b;
+            padding: 0.85rem 1.25rem;
+            padding-bottom: max(0.85rem, env(safe-area-inset-bottom));
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+
+        .sticky-cta.visible {
+            transform: translateY(0);
+        }
+
+        /* Feature card */
+        .feature-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid #1e293b;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #2563eb;
+            transform: translateY(-4px);
+        }
+
+        /* Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-content {
+            animation: marquee 20s linear infinite;
+        }
+
+        /* Price tag styling */
+        .price-tag {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+        }
+    </style>
+</head>
+<body class="bg-bg text-fg">
+
+    <!-- Main Container -->
+    <main class="w-full relative noise-bg min-h-screen">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+
+        <!-- HERO SECTION -->
+        <section class="relative z-10 py-12 px-4 md:py-20 md:px-8 text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="reveal inline-flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2 mb-6">
+                    <span class="relative w-2 h-2 bg-accent rounded-full pulse-dot"></span>
+                    <span class="text-sm text-muted font-medium">Khusus Microstocker Indonesia</span>
+                </div>
+
+                <h1 class="reveal font-display text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                    100+ Pertanyaan <span class="text-accent">Microstocker</span>.
+                </h1>
+
+                <p class="reveal text-lg md:text-xl text-muted max-w-2xl mx-auto mb-12 leading-relaxed">
+                    100+ Pertanyaan Para Microstocker Terjawab Disini !
+                </p>
+
+                <div class="reveal relative rounded-3xl overflow-hidden border border-border bg-card shadow-2xl max-w-2xl mx-auto group">
+                    <img src="https://raw.githubusercontent.com/ekodwilistianto/testimonimember/main/100%20pertanyaan.jpg" 
+                         alt="Cover 100+ Pertanyaan Microstocker" 
+                         class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-bg/80 via-transparent to-transparent"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL PROOF STRIP -->
+        <section class="relative z-10 py-6 border-y border-border bg-card/50 overflow-hidden">
+            <div class="flex marquee-content whitespace-nowrap">
+                <div class="flex items-center gap-8 px-4 text-sm md:text-base">
+                    <span class="text-muted">Akses Materi Selamanya</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Update Rutin Berkala</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Solusi Masalah Teknis</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Format Tanya Jawab Praktis</span>
+                    <span class="text-accent">|</span>
+                </div>
+                <div class="flex items-center gap-8 px-4 text-sm md:text-base">
+                    <span class="text-muted">Akses Materi Selamanya</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Update Rutin Berkala</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Solusi Masalah Teknis</span>
+                    <span class="text-accent">|</span>
+                    <span class="text-muted">Format Tanya Jawab Praktis</span>
+                    <span class="text-accent">|</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- DAFTAR ISI SECTION -->
+        <section id="curriculum" class="relative z-10 py-16 px-4 md:py-24 md:px-8 bg-card/20">
+            <div class="max-w-4xl mx-auto">
+                <div class="reveal text-center mb-16">
+                    <span class="inline-block text-accent font-display font-semibold text-sm tracking-wider uppercase mb-4">Materi Eksklusif</span>
+                    <h2 class="font-display text-3xl md:text-5xl font-bold mb-4">
+                        Daftar Isi <span class="text-accent">E-Book</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto leading-relaxed">Panduan lengkap yang menjawab semua keraguanmu, mulai dari riset keyword hingga manajemen portofolio dan AI.</p>
+                </div>
+
+                <div class="grid gap-8">
+                    <!-- Bagian 1 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 1:</span> Riset & Optimasi Keyword
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Strategi pilih keyword yang enggak terlalu kompetitif tapi tetap laku?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bedanya pembeli global sama lokal di microstock gimana ya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara pakai metadata biar karya gampang ketemu?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Keyword bahasa lain itu penting gak sih?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Long-tail keyword itu apa, dan kenapa penting?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara riset niche microstock yang belum banyak pesaing tapi punya permintaan?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah keyword yang umum harus tetap dimasukkan?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara menghindari keyword yang spammy?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah penting menyesuaikan keyword tiap platform microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah keyword yang trendi harus selalu diikuti?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara membuat keyword untuk ilustrasi vs foto?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa itu keyword negatif, dan harus diapakan?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Berapa banyak keyword yang ideal untuk satu karya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara update keyword lama yang kurang performa?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah keyword dalam judul sama pentingnya dengan metadata?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara menggunakan keyword lokal untuk pasar tertentu?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Ada tools khusus buat cek keyword di microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara membedakan keyword umum dan spesifik?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Keyword brand terkenal boleh dipakai gak?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Perlukah keyword seasonal ditambah?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bagian 2 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 2:</span> Produksi Konten & Editing
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara bikin konten yang sesuai tren tapi tetap original?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Editing foto/video yang sering dianggap kurang oleh platform?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips bikin video microstock yang keren tapi simpel?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Pake model atau properti punya lisensi itu enaknya gimana?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara atur workflow supaya produksi lancar terus?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Resolusi dan format file ideal buat upload microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang bikin foto atau video microstock ditolak?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara bikin thumbnail yang menarik di microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bikin konten dengan gaya unik, tapi tetap laku, gimana caranya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara memilih tema warna yang pas buat microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Editing warna yang pas buat microstock itu gimana?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah harus pakai software editing premium?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara mengatur pencahayaan supaya karya oke?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara bikin footage video yang gampang dipakai buat klien?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang harus diperhatikan kalau mau bikin ilustrasi vector?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bikin konten berdasarkan brief atau ide sendiri, mana yang lebih baik?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara jaga konsistensi style karya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah konten dengan watermark boleh di-upload?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips bikin foto produk microstock yang profesional?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara mempercepat proses editing tanpa ngorbanin kualitas?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bagian 3 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10 border-l-4 border-accent">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 3:</span> Strategi Penjualan & Marketing
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara bikin judul dan deskripsi yang menarik pembeli?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Kapan waktu terbaik upload karya ke platform microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah perlu bikin portofolio di beberapa platform sekaligus?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara meningkatkan penjualan karya lama?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips buat promo karya microstock di sosial media?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana caranya supaya karya kita lebih sering muncul di pencarian?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah harus ikut program eksklusif?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara menentukan harga jual yang pas di microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara memanfaatkan data analytics dari platform?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Strategi jualan microstock buat pemula?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara berinteraksi dengan pembeli atau klien?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah keyword ads berbayar efektif buat microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara bikin brand personal sebagai microstocker?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah microstock bisa jadi passive income beneran?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara memanfaatkan tren musiman buat penjualan?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara kerja sistem royalti di microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara menghadapi penolakan karya secara profesional?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips supaya karya microstock bisa viral?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang harus dihindari saat promosi karya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara kerjasama dengan kreator lain di microstock?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bagian 4 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 4:</span> Legalitas & Lisensi
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa itu model release dan kapan harus pakai?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bedanya lisensi eksklusif dan non-eksklusif?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara menghindari masalah hak cipta?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah boleh pakai foto atau ilustrasi orang lain sebagai referensi?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana kalau karya kita dijiplak?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang harus diperhatikan kalau pakai properti berlisensi?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara buat kontrak kerja sama di microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah perlu daftar hak cipta?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara ngecek kalau karya kita aman dari klaim hak cipta?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa risiko pakai musik tanpa lisensi di video microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah ada aturan khusus buat foto anak-anak?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara ngurus legal untuk fotografer freelance microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang harus diperhatikan kalau mau jual karya dengan wajah publik?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara laporin pelanggaran hak cipta?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa yang harus dilakukan kalau ada klaim palsu?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bagian 5 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 5:</span> Manajemen Portofolio & Workflow
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara mengatur portofolio supaya rapi dan mudah diakses?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah perlu punya tema khusus di portofolio?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tools apa aja yang bisa bantu manajemen portofolio?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara atur jadwal upload karya?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara menghindari burnout saat produksi konten?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara backup karya dengan aman?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah perlu buat folder khusus buat tiap platform?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara nge-track karya yang paling laku?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips menjaga motivasi buat microstocker?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara ngatur waktu kerja microstock sama pekerjaan lain?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara cepat adaptasi sama update aturan platform?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa pentingnya evaluasi portofolio secara berkala?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Cara mengelola komentar atau feedback dari pembeli?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah perlu ikut komunitas microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tips belajar terus supaya kualitas konten makin oke?</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bagian 6 -->
+                    <div class="reveal feature-card rounded-2xl p-6 md:p-10 border-2 border-accent/50 bg-accent/5">
+                        <h3 class="font-display text-2xl font-bold mb-6 flex items-center gap-3 text-fg">
+                            <span class="text-accent">Bagian 6:</span> AI Generated Content di Microstock
+                        </h3>
+                        <ul class="space-y-4 text-sm md:text-base text-muted">
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah karya AI generated boleh dijual di platform microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara mencantumkan informasi bahwa karya dibuat dengan AI?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa risiko legal dan etika kalau pakai AI buat bikin karya microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Gimana cara bikin prompt AI yang efektif untuk microstock?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apakah ada perbedaan keyword khusus untuk karya AI generated?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara menghindari karya AI ditolak oleh platform?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Boleh gak kolaborasi antara karya AI dengan karya manual?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Apa tips supaya karya AI tetap orisinal dan gak pasaran?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Bagaimana cara memanfaatkan AI untuk mempercepat editing dan produksi?</li>
+                            <li class="flex items-start gap-3"><div class="w-1.5 h-1.5 bg-accent rounded-full mt-2 flex-shrink-0"></div>Tren AI generated content apa yang paling laku di microstock sekarang?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section id="pricing" class="relative z-10 py-16 px-4 md:py-24 md:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="reveal text-center mb-12">
+                    <span class="text-accent font-display font-semibold text-sm tracking-wider uppercase mb-4 block">Kesempatan Terbatas</span>
+                    <div class="flex justify-center gap-4" id="countdown">
+                        <div class="countdown-box rounded-2xl p-4 min-w-[85px]">
+                            <div class="text-3xl font-bold font-display" id="hours">23</div>
+                            <div class="text-[10px] text-muted uppercase">Jam</div>
+                        </div>
+                        <div class="countdown-box rounded-2xl p-4 min-w-[85px]">
+                            <div class="text-3xl font-bold font-display" id="minutes">59</div>
+                            <div class="text-[10px] text-muted uppercase">Menit</div>
+                        </div>
+                        <div class="countdown-box rounded-2xl p-4 min-w-[85px]">
+                            <div class="text-3xl font-bold font-display" id="seconds">59</div>
+                            <div class="text-[10px] text-muted uppercase">Detik</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal feature-card rounded-[2.5rem] p-8 md:p-14 border-2 border-accent/30 relative overflow-hidden text-center">
+                    <div class="absolute top-0 right-0 price-tag px-8 py-2 text-sm font-bold text-white">HEMAT 36%</div>
+                    
+                    <h2 class="font-display text-3xl md:text-5xl font-bold mb-8 text-fg leading-tight">Investasi Sekali,<br>Manfaat Selamanya</h2>
+                    
+                    <div class="mb-12">
+                        <div class="text-muted text-xl mb-3 font-medium opacity-60"><span class="strike-through">Rp155.000</span></div>
+                        <div class="text-accent text-6xl md:text-8xl font-display font-bold mb-3">Rp99.000</div>
+                        <p class="text-base text-muted">E-book (PDF) Langsung Dikirim ke Email</p>
+                    </div>
+
+                    <a href="https://ekodwilistianto.com/ekodwi.id/djwywx1dpkk5/checkout?token=cGFyYW1zPSU1QiU1RCZiaWRfcHJpY2U9MCZxdHlfcHJvZD0x" target="_blank" class="cta-btn block w-full py-6 rounded-2xl font-display font-bold text-2xl mb-4">
+                        <span>Beli Sekarang</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="relative z-10 py-12 px-4 border-t border-border text-center text-muted text-sm">
+            <p>&copy; 2024 ekodwilistianto.com. Semua Hak Dilindungi.</p>
+        </footer>
+    </main>
+
+    <!-- STICKY CTA -->
+    <div class="sticky-cta" id="stickyCta">
+        <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
+            <div class="flex flex-col">
+                <div class="text-[11px] text-muted leading-tight mb-0.5"><span class="strike-through opacity-60">Rp155.000</span></div>
+                <div class="font-display font-bold text-fg text-2xl md:text-3xl leading-tight">Rp99.000</div>
+            </div>
+            <a href="https://ekodwilistianto.com/ekodwi.id/djwywx1dpkk5/checkout?token=cGFyYW1zPSU1QiU1RCZiaWRfcHJpY2U9MCZxdHlfcHJvZD0x" target="_blank" 
+               class="cta-btn px-6 py-3 md:px-12 md:py-4 rounded-xl font-display font-bold text-sm md:text-xl transition-all shadow-xl active:scale-95 whitespace-nowrap">
+                <span>Beli Sekarang</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function initCountdown() {
+            let endTime = localStorage.getItem('countdownEndBlue');
+            if (!endTime || Date.now() > endTime) {
+                // Reset to 24 hours (Dummy loop)
+                endTime = Date.now() + 24 * 60 * 60 * 1000;
+                localStorage.setItem('countdownEndBlue', endTime);
+            }
+
+            function update() {
+                const now = Date.now();
+                let diff = endTime - now;
+
+                if (diff <= 0) {
+                    endTime = Date.now() + 24 * 60 * 60 * 1000;
+                    localStorage.setItem('countdownEndBlue', endTime);
+                    diff = endTime - now;
+                }
+
+                const h = Math.floor(diff / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+
+                document.getElementById('hours').textContent = String(h).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        // Scroll Reveal
+        function initReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('active');
+                });
+            }, { threshold: 0.05 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Sticky CTA Visibility
+        function initSticky() {
+            window.addEventListener('scroll', () => {
+                // Show sticky button after scrolling 500px
+                if (window.scrollY > 500) {
+                    document.getElementById('stickyCta').classList.add('visible');
+                } else {
+                    document.getElementById('stickyCta').classList.remove('visible');
+                }
+            }, { passive: true });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCountdown();
+            initReveal();
+            initSticky();
+        });
+    </script>
+</body>
+</html>
